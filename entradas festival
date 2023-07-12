@@ -1,0 +1,125 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_GENERAL 500
+#define MAX_VIP 100
+#define MAX_BACKSTAGE 50
+#define PRECIO_GENERAL 50
+#define PRECIO_VIP 100
+#define PRECIO_BACKSTAGE 200
+#define MAX_INTENTOS 3
+
+int main() {
+    int intentos = 0;
+    char usuario[20], contrasena[20];
+    char usuario1[] = "usuario1", contrasena1[] = "contrasena1";
+    char usuario2[] = "usuario2", contrasena2[] = "contrasena2";
+    char usuario3[] = "usuario3", contrasena3[] = "contrasena3";
+    int total_general = 0, total_vip = 0, total_backstage = 0, total_ingresos = 0;
+    int opcion, num_entradas;
+
+    while (intentos < MAX_INTENTOS) {
+        printf("Ingrese su nombre de usuario: ");
+        scanf("%s", usuario);
+        printf("Ingrese su contrasena: ");
+        scanf("%s", contrasena);
+
+        if ((strcmp(usuario, usuario1) == 0 && strcmp(contrasena, contrasena1) == 0) ||
+            (strcmp(usuario, usuario2) == 0 && strcmp(contrasena, contrasena2) == 0) ||
+            (strcmp(usuario, usuario3) == 0 && strcmp(contrasena, contrasena3) == 0)) {
+            printf("Inicio de sesion exitoso\n");
+
+            do {
+                printf("\nSeleccione una opcion:\n");
+                printf("1. Venta de Entradas\n");
+                printf("2. Estadisticas de Ventas\n");
+                printf("3. Salir\n");
+                scanf("%d", &opcion);
+
+                switch (opcion) {
+                    case 1:
+                        printf("\nTipos de entradas:\n");
+                        printf("1. General\n");
+                        printf("2. VIP\n");
+                        printf("3. Backstage\n");
+                        printf("Seleccione el tipo de entrada: ");
+                        scanf("%d", &opcion);
+
+                        switch (opcion) {
+                            case 1:
+                                printf("Entradas disponibles: %d\n", MAX_GENERAL - total_general);
+                                printf("Ingrese el numero de entradas que desea comprar: ");
+                                scanf("%d", &num_entradas);
+
+                                if (num_entradas > 0 && num_entradas <= MAX_GENERAL - total_general) {
+                                    total_general += num_entradas;
+                                    total_ingresos += num_entradas * PRECIO_GENERAL;
+                                    printf("Venta exitosa\n");
+                                } else {
+                                    printf("No hay suficientes entradas disponibles\n");
+                                }
+
+                                break;
+                            case 2:
+                                printf("Entradas disponibles: %d\n", MAX_VIP - total_vip);
+                                printf("Ingrese el numero de entradas que desea comprar: ");
+                                scanf("%d", &num_entradas);
+
+                                if (num_entradas > 0 && num_entradas <= MAX_VIP - total_vip) {
+                                    total_vip += num_entradas;
+                                    total_ingresos += num_entradas * PRECIO_VIP;
+                                    printf("Venta exitosa\n");
+                                } else {
+                                    printf("No hay suficientes entradas disponibles\n");
+                                }
+
+                                break;
+                            case 3:
+                                printf("Entradas disponibles: %d\n", MAX_BACKSTAGE - total_backstage);
+                                printf("Ingrese el numero de entradas que desea comprar: ");
+                                scanf("%d", &num_entradas);
+
+                                if (num_entradas > 0 && num_entradas <= MAX_BACKSTAGE - total_backstage) {
+                                    total_backstage += num_entradas;
+                                    total_ingresos += num_entradas * PRECIO_BACKSTAGE;
+                                    printf("Venta exitosa\n");
+                                } else {
+                                    printf("No hay suficientes entradas disponibles\n");
+                                }
+
+                                break;
+                            default:
+                                printf("Opcion no valida\n");
+                        }
+
+                        break;
+                    case 2:
+                        printf("\nEstadisticas de Ventas:\n");
+                        printf("Total de entradas vendidas:\n");
+                        printf(" - General: %d\n", total_general);
+                        printf(" - VIP: %d\n", total_vip);
+                        printf(" - Backstage: %d\n", total_backstage);
+                        printf("Total de ingresos: $%d\n", total_ingresos);
+
+                        break;
+                    case 3:
+                        printf("\nHasta luego\n");
+                        return 0;
+                    default:
+                        printf("Opcion no valida\n");
+                }
+            } while (opcion != 3);
+
+            break;
+        } else {
+            intentos++;
+            printf("Usuario o contrasena incorrectos, intento #%d\n", intentos);
+        }
+    }
+
+    if (intentos == MAX_INTENTOS) {
+        printf("Imposible ingresar\n");
+    }
+
+    return 0;
+}
